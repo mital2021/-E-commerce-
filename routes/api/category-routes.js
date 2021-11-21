@@ -8,8 +8,8 @@ router.get('/', (req, res) => {
     attributes: ['id', 'category_name'],
     include: [
       {
-        model: Product,
-        attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
+       model: Product,
+       attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
       }
     ]
   })
@@ -62,8 +62,11 @@ router.put('/:id', (req, res) => {
       id: req.params.id
     }
   })
-    .then((dbCategory) => res.status(200).json(dbCategory))
-    .catch((err) => res.status(400).json(err));
+  .then(dbCategory => res.json(dbCategory))
+  .catch(err => {
+    console.log(err);
+    res.status(400).json(err);
+  });
 });
 
 
@@ -76,7 +79,7 @@ router.delete('/:id', (req, res) => {
   })
     .then(dbCategory => {
       if (!dbCategory) {
-        res.status(404).json({ message: 'No comment found with this id!' });
+        res.status(404).json({ message: 'No Category found with this id!' });
         return;
       }
       res.json(dbCategory);

@@ -68,6 +68,7 @@ router.post('/', (req, res) => {
     }
   */
   Product.create(req.body)
+ 
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
       if (req.body.tagIds.length) {
@@ -140,7 +141,7 @@ router.delete('/:id', (req, res) => {
   })
     .then(dbProduct => {
       if (!dbProduct) {
-        res.status(404).json({ message: 'No comment found with this id!' });
+        res.status(404).json({ message: 'No product found with this id!' });
         return;
       }
       res.json(dbProduct);
