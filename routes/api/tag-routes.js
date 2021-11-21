@@ -33,12 +33,18 @@ router.get('/:id', (req, res) => {
       }
     ]
   })
-  .then(dbTag => res.json(dbTag))
+  .then(dbTag => {
+    if (!dbTag) {
+      res.status(404).json({ message: 'No tag found with this id' });
+      return;
+    }
+    res.json(dbTag);
+  })
   .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
+    console.log(err);
+    res.status(500).json(err);
   });
-
+  
 
 });
 
@@ -59,10 +65,16 @@ router.put('/:id', (req, res) => {
       id: req.params.id
     }
   })
-  .then(dbTag => res.json(dbTag))
+  .then(dbTag => {
+    if (!dbTag) {
+      res.status(404).json({ message: 'No tag found with this id' });
+      return;
+    }
+    res.json(dbTag);
+  })
   .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
+    console.log(err);
+    res.status(500).json(err);
   });
 });
 

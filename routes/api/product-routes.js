@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
         attributes: ['id', 'category_name']
       },
       {
-        model: Category,
+        model: Tag,
         attributes: ['id', 'tag_name']
       }
 
@@ -49,11 +49,17 @@ router.get('/:id', (req, res) => {
 
     ]
   })
-    .then((dbProduct) => res.json(dbProduct))
-    .catch((err) => {
-      console.log(err);
-      res.status(400).json(err);
-    });
+  .then(dbProduct => {
+    if (!dbProduct) {
+      res.status(404).json({ message: 'No product found with this id' });
+      return;
+    }
+    res.json(dbProduct);
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json(err);
+  });
 
 });
 
@@ -67,8 +73,16 @@ router.post('/', (req, res) => {
       tagIds: [1, 2, 3, 4]
     }
   */
-  Product.create(req.body)
- 
+  Product.create({
+    product_name: req.body.product_name,
+    price: req.body.price,
+    stock: req.body.stock,
+    category_id: req.body.category_id,
+    tag_id: req.body.tag_id
+
+  })
+    
+
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
       if (req.body.tagIds.length) {

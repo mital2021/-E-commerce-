@@ -24,7 +24,7 @@ router.get('/:id', (req, res) => {
 
   Category.findOne({
     where: {
-      id: req.params.id,
+      id: req.params.id
     },
     attributes: ['id', 'category_name'],
     include: [
@@ -35,11 +35,17 @@ router.get('/:id', (req, res) => {
     ]
   })
 
-    .then((dbCategory) => res.json(dbCategory))
-    .catch((err) => {
-      console.log(err);
-      res.status(400).json(err);
-    });
+  .then(dbCategory => {
+    if (!dbCategory) {
+      res.status(404).json({ message: 'No category found with this id' });
+      return;
+    }
+    res.json(dbCategory);
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json(err);
+  });
 });
 
 
@@ -51,21 +57,28 @@ router.post('/', (req, res) => {
     .then(dbCategory => res.json(dbCategory))
     .catch(err => {
       console.log(err);
-      res.status(400).json(err);
+      res.status(500).json(err);
     });
 });
 
 router.put('/:id', (req, res) => {
   // update a category by its `id` value
-  Category.update(req.body, {
+  Category.update(req.body,
+  {
     where: {
       id: req.params.id
     }
   })
-  .then(dbCategory => res.json(dbCategory))
+  .then(dbCategory => {
+    if (!dbCategory) {
+      res.status(404).json({ message: 'No Category found with this id' });
+      return;
+    }
+    res.json(dbCategory);
+  })
   .catch(err => {
     console.log(err);
-    res.status(400).json(err);
+    res.status(500).json(err);
   });
 });
 
