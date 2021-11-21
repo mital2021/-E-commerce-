@@ -15,7 +15,7 @@ Category.init(
     },
     Category_name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
 
     },
   },
@@ -26,6 +26,7 @@ Category.init(
     underscored: true,
     modelName: 'category',
   }
-);
+
+  );
 
 module.exports = Category;

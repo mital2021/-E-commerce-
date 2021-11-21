@@ -5,32 +5,33 @@ const { Category, Product } = require('../../models');
 
 router.get('/', (req, res) => {
   Category.findAll()
-  .then(dbCategory => res.json(dbCategory))
-  .catch(err => {
-    console.log(err);
-    res.status(500).json(err);
-  });
+    .then(dbCategory => res.json(dbCategory))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 
 });
 
 router.get('/:id', (req, res) => {
- 
-    Category.findOne({
-      where: {
-        id: req.params.id,
-      },
-      include: [Product],
-    })
-      .then((dbCategory) => res.json(dbCategory))
-      .catch((err) => {
-        console.log(err);
-        res.status(400).json(err);
-  });
+
+  Category.findOne({
+    where: {
+      id: req.params.id,
+    },
+    include: [Product],
+  })
+    .then((dbCategory) => res.json(dbCategory))
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json(err);
+    });
+});
 
 router.post('/', (req, res) => {
   Category.create({
     Category_name: req.body.Category_name,
-    
+
   })
     .then(dbCategory => res.json(dbCategory))
     .catch(err => {
@@ -46,8 +47,8 @@ router.put('/:id', (req, res) => {
       id: req.params.id
     }
   })
-  .then((dbCategory) => res.status(200).json(dbCategory))
-  .catch((err) => res.status(400).json(err));
+    .then((dbCategory) => res.status(200).json(dbCategory))
+    .catch((err) => res.status(400).json(err));
 });
 
 
