@@ -39,7 +39,7 @@ router.get('/:id', (req, res) => {
     attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
     include: [
       {
-        modell: Category,
+        model: Category,
         attributes: ['id', 'category_name']
       },
       {
@@ -74,7 +74,7 @@ router.post('/', (req, res) => {
     }
   */
   Product.create({
-    
+
     product_name: req.body.product_name,
     price: req.body.price,
     stock: req.body.stock,
