@@ -18,7 +18,7 @@ Product.init(
     },
     product_name: {
       type: DataTypes.STRING,
-      allowNull: false
+     // allowNull: false
     },
 
     price: {
@@ -40,7 +40,6 @@ Product.init(
 
     category_id: {
       type: DataTypes.INTEGER,
-      //allowNull: false,
       references: {
         model: 'category',
         key: 'id'

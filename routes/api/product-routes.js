@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
 
     ]
   })
-    .then(dbProduct => res.json(dbProduct))
+    .then(dbproduct => res.json(dbproduct))
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
@@ -39,7 +39,7 @@ router.get('/:id', (req, res) => {
     attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
     include: [
       {
-        module: Category,
+        modell: Category,
         attributes: ['id', 'category_name']
       },
       {
@@ -146,12 +146,12 @@ router.delete('/:id', (req, res) => {
       id: req.params.id
     }
   })
-    .then(dbProduct => {
-      if (!dbProduct) {
+    .then(dbproduct => {
+      if (!dbproduct) {
         res.status(404).json({ message: 'No product found with this id!' });
         return;
       }
-      res.json(dbProduct);
+      res.json(dbproduct);
     })
     .catch(err => {
       console.log(err);
